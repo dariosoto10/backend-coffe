@@ -18,6 +18,6 @@ mongoose.connect(process.env.URLDB, (err, resp) => {
   }
 })
 
-app.listen(3002, () => {
+app.listen(process.env.PORT, () => {
   console.log('works')
 })
