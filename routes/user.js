@@ -4,6 +4,12 @@ const bcrypt = require('bcrypt')
 const router = express.Router()
 const _ = require('lodash')
 
+router.get('/omg', (req, res) => {
+  res.json({
+    ok: true
+  })
+})
+
 router.get('/user', (req, res) => {
   let from = req.query.from || 0
   from = Number(from)

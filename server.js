@@ -11,13 +11,13 @@ app.use(bodyParser.json())
 
 app.use('/', userRoutes)
 
-mongoose.connect(process.env.URLDB, (err, resp) => {
-  if (err) console.log(err)
-  else {
-    console.log('connected with mongo')
-  }
-})
-
-app.listen(process.env.PORT, () => {
-  console.log('works')
-})
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log('works')
+    })
+  })
+  .catch(err => {
+    console.log(err)
+  })
