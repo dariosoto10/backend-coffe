@@ -1,16 +1,11 @@
 const express = require('express')
 const User = require('../models/user.model')
+const { verifyToken } = require('../middlewares/authMiddleware')
 const bcrypt = require('bcrypt')
 const router = express.Router()
 const _ = require('lodash')
 
-router.get('/omg', (req, res) => {
-  res.json({
-    ok: true
-  })
-})
-
-router.get('/user', (req, res) => {
+router.get('/user', verifyToken, (req, res) => {
   let from = req.query.from || 0
   from = Number(from)
 
@@ -45,7 +40,7 @@ router.get('/user', (req, res) => {
     })
 })
 
-router.post('/user', (req, res) => {
+router.post('/user', verifyToken, (req, res) => {
   let body = req.body
 
   let user = new User({
@@ -70,7 +65,7 @@ router.post('/user', (req, res) => {
   })
 })
 
-router.put('/user/:id', (req, res) => {
+router.put('/user/:id', verifyToken, (req, res) => {
   let body = _.pick(req.body, ['name', 'email', 'img', 'role'])
   let id = req.params.id
 
@@ -94,7 +89,7 @@ router.put('/user/:id', (req, res) => {
   )
 })
 
-router.delete('/user/:id', (req, res) => {
+router.delete('/user/:id', verifyToken, (req, res) => {
   let id = req.params.id
 
   User.findByIdAndRemove(id, (err, userRemoved) => {
@@ -116,12 +111,6 @@ router.delete('/user/:id', (req, res) => {
         })
       }
     }
-  })
-})
-
-router.get('/omg', (req, res) => {
-  res.json({
-    omg: true
   })
 })
 
